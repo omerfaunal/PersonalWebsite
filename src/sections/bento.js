@@ -116,11 +116,11 @@ const educationData = [
     date: 'Sep 2019 – June 2024',
     location: 'Istanbul, Türkiye',
     badge: 'BSc',
-    title: 'Double Major — Physics & Computer Science',
+    title: 'Double Major — Physics & Computer Engineering',
     org: { name: 'Boğaziçi University', url: 'https://www.boun.edu.tr/en' },
     logo: '/assets/boun.svg',
     body: `BSc Computer Engineering <strong>(GPA 3.83/4.0)</strong> and BSc Physics <strong>(GPA 3.67/4.0)</strong>. One of Turkey's most selective and prestigious universities.`,
-    tags: ['Physics', 'Computer Science', 'Mathematics'],
+    tags: ['Physics', 'Computer Science', 'Computer Engineering', 'Mathematics'],
   },
   {
     date: 'Ongoing',
