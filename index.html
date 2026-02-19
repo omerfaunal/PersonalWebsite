@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omer Faruk Unal — Software Engineer · Cambridge</title>
+    <meta name="description" content="Software engineer and Cambridge MPhil student. Building fast systems, solving hard problems, and running long distances." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+
+    <!-- ─── Floating Island Navigation ─── -->
+    <div class="nav-wrap" id="nav-wrap">
+      <nav class="nav-island" id="nav-island">
+        <a href="#hero" class="nav-logo">ö.</a>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#notebook">Notebook</a></li>
+          <li><a href="#contact" class="nav-link--cta">Contact</a></li>
+        </ul>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+    <!-- Mobile drawer -->
+    <div class="nav-drawer" id="nav-drawer">
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#notebook">Notebook</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <!-- ─── HERO ─── -->
+    <section id="hero" class="hero-section">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="hero-badge__dot"></span>
+            MPhil · University of Cambridge
+          </div>
+          <h1 class="hero-headline">
+            <!-- Canvas replaces static text; hidden span keeps font loaded for sampling -->
+            <span class="hero-name hero-name--hidden" id="hero-name-source" aria-hidden="true">Omer Faruk Unal.</span>
+            <canvas id="name-canvas" class="hero-name-canvas" aria-label="Omer Faruk Unal."></canvas>
+            <span class="hero-line hero-line--main">Software</span>
+            <span class="hero-line hero-line--main hero-line--accent">Engineer.</span>
+            <span class="hero-line hero-line--sub">
+              Physicist by training.
+              <span class="hero-athlete">Athlete by choice.</span>
+            </span>
+          </h1>
+          <p class="hero-tagline">
+            I build low-latency systems, tackle hard numerical problems, and ship products people actually use.
+          </p>
+          <div class="hero-cta">
+            <a href="#experience" class="btn btn--primary">View Work</a>
+            <a href="#contact" class="btn btn--ghost">Get in Touch
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-photo-frame">
+            <div class="hero-photo-inner">
+              <div class="hero-photo-placeholder">
+                <img src="/assets/photo.jpeg" alt="Profile Photo" />
+              </div>
+            </div>
+          </div>
+          <div class="hero-orbit hero-orbit--1"></div>
+          <div class="hero-orbit hero-orbit--2"></div>
+          <div class="hero-orbit-dot hero-orbit-dot--1"></div>
+          <div class="hero-orbit-dot hero-orbit-dot--2"></div>
+        </div>
+      </div>
+      <div class="scroll-cue" id="scroll-cue">
+        <div class="scroll-cue__mouse"><div class="scroll-cue__wheel"></div></div>
+      </div>
+    </section>
+
+    <!-- ─── EXPERIENCE ─── -->
+    <section id="experience" class="page-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-eyebrow">Where I've Worked</p>
+          <h2 class="section-title">Experience</h2>
+        </div>
+        <div class="timeline" id="experience-timeline"></div>
+      </div>
+    </section>
+
+    <!-- ─── PROJECTS ─── -->
+    <section id="projects" class="page-section page-section--alt">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-eyebrow">What I've Built</p>
+          <h2 class="section-title">Projects</h2>
+        </div>
+        <div class="projects-list" id="projects-list"></div>
+      </div>
+    </section>
+
+    <!-- ─── EDUCATION ─── -->
+    <section id="education" class="page-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-eyebrow">Academic Journey</p>
+          <h2 class="section-title">Education</h2>
+        </div>
+        <div class="timeline" id="education-timeline"></div>
+        <div class="awards-grid" id="awards-grid"></div>
+      </div>
+    </section>
+
+    <!-- ─── GALLERY ─── -->
+    <section id="gallery" class="page-section page-section--alt">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-eyebrow">Life Beyond the Screen</p>
+          <h2 class="section-title">Active Life</h2>
+          <p class="section-subtitle">
+            I was too lazy to spend time selecting photographs from my gallery, so keeping placeholders for now.
+            If in the future somehow I stop being lazy, I might put something here.
+          </p>
+        </div>
+        <div class="gallery-lanes" id="gallery-lanes"></div>
+        <div class="lightbox" id="lightbox">
+          <button class="lightbox-close" id="lightbox-close">&times;</button>
+          <div class="lightbox-content">
+            <div class="lightbox-image" id="lightbox-image"></div>
+            <p class="lightbox-caption" id="lightbox-caption"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── NOTEBOOK ─── -->
+    <section id="notebook" class="page-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-eyebrow">Casual Thoughts</p>
+          <h2 class="section-title">The Notebook</h2>
+          <p class="section-subtitle">Bad takes, unsolicited opinions, and the occasional insight.</p>
+        </div>
+        <div class="journal-list" id="journal-list"></div>
+      </div>
+    </section>
+
+    <!-- ─── CONTACT ─── -->
+    <section id="contact" class="page-section page-section--dark contact-section">
+      <div class="section-inner">
+        <div class="contact-header">
+          <p class="section-eyebrow">Get in Touch</p>
+          <h2 class="contact-title">Let's start a conversation.</h2>
+          <p class="contact-sub">
+            Whether it's a job opportunity, a collaboration, I'm happy to hear from you.
+          </p>
+        </div>
+
+        <div class="contact-list">
+          <a href="mailto:omerfaunal@outlook.com" class="contact-row">
+            <span class="contact-row__label">Email</span>
+            <span class="contact-row__val">omerfaunal@outlook.com</span>
+            <span class="contact-row__icon">→</span>
+          </a>
+          <a href="https://linkedin.com/in/omerfaunal" target="_blank" rel="noopener" class="contact-row">
+            <span class="contact-row__label">LinkedIn</span>
+            <span class="contact-row__val">omerfaunal</span>
+            <span class="contact-row__icon">↗</span>
+          </a>
+          <a href="https://github.com/omerfaunal" target="_blank" rel="noopener" class="contact-row">
+            <span class="contact-row__label">GitHub</span>
+            <span class="contact-row__val">omerfaunal</span>
+            <span class="contact-row__icon">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FOOTER ─── -->
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <a href="#hero" class="footer-logo">ö.</a>
+          <nav class="footer-nav">
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#notebook">Notebook</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Omer Faruk Unal</p>
+          <p class="footer-tagline">Built with curiosity &amp; too much tea.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

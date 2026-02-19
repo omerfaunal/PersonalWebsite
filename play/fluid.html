@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Euler Fluid Playground · Omer Faruk Unal</title>
+  <meta name="description" content="Real-time Stable Fluids simulation – drag to add velocity and density." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #111;
+      color: rgba(255,255,255,0.85);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top Bar ── */
+    .fluid-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      flex-shrink: 0;
+      z-index: 10;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .fluid-bar__left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .fluid-bar__logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #52B788;
+      text-decoration: none;
+    }
+    .fluid-bar__title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+    }
+    .fluid-bar__sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.15rem;
+    }
+    .fluid-bar__right {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .fluid-hint {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .fluid-hint svg { flex-shrink: 0; }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-back:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    /* ── Canvas ── */
+    #fluid-canvas {
+      flex: 1;
+      display: block;
+      width: 100%;
+      cursor: crosshair;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    /* ── Info panel bottom-right ── */
+    .fluid-info {
+      position: fixed;
+      bottom: 1.2rem;
+      right: 1.5rem;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 0.8rem 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.8;
+      pointer-events: none;
+    }
+    .fluid-info span { color: #52B788; }
+
+    /* ── Clear button ── */
+    .btn-clear {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #52B788;
+      border: 1px solid rgba(82,183,136,0.3);
+      border-radius: 30px;
+      background: rgba(82,183,136,0.07);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-clear:hover {
+      background: rgba(82,183,136,0.15);
+      border-color: rgba(82,183,136,0.5);
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="fluid-bar">
+    <div class="fluid-bar__left">
+      <a href="/" class="fluid-bar__logo">ö.</a>
+      <div>
+        <div class="fluid-bar__title">Euler Fluid Playground</div>
+        <div class="fluid-bar__sub">Stable Fluids · Jos Stam (1999) · Real-time 2D Navier-Stokes</div>
+      </div>
+    </div>
+    <div class="fluid-bar__right">
+      <div class="fluid-hint">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Drag to inject dye &amp; velocity
+      </div>
+      <button class="btn-clear" id="btn-clear">✕ Clear</button>
+      <a href="/" class="btn-back">← Back</a>
+    </div>
+  </div>
+
+  <!-- Main Canvas -->
+  <canvas id="fluid-canvas"></canvas>
+
+  <!-- Info Panel -->
+  <div class="fluid-info">
+    Method: <span>Stable Fluids</span><br/>
+    Grid: <span>128×128</span><br/>
+    Solver: <span>Gauss-Seidel (20 iter)</span><br/>
+    Steps: <span>Diffuse → Advect → Project</span>
+  </div>
+
+  <script type="module">
+    import { initFluid } from '/src/play/fluid-sim.js';
+
+    const canvas = document.getElementById('fluid-canvas');
+
+    // Size canvas to fill remaining space
+    function resize() {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    initFluid(canvas);
+
+    // Clear button
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      // Reload page to reset simulation state
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>

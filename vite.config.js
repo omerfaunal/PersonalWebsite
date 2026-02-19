@@ -1,0 +1,17 @@
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
+
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: {
+        main:  resolve(__dirname, 'index.html'),
+        blog:  resolve(__dirname, 'blog-post.html'),
+        fluid: resolve(__dirname, 'play/fluid.html'),
+      },
+    },
+  },
+  server: {
+    open: true,
+  },
+});

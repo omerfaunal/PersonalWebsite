@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notebook · Omer Faruk Unal</title>
+  <style>
+    /* Minimal inline override for blog container */
+    .blog-container {
+      max-width: 740px;
+      margin: 8rem auto 4rem;
+      padding: 0 1.5rem;
+      min-height: 60vh;
+    }
+    .blog-header { margin-bottom: 3rem; text-align: center; }
+    .blog-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #666; margin-bottom: 1rem; }
+    .blog-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #2C2C2C; margin-bottom: 2rem; line-height: 1.2; }
+    .blog-body { font-family: 'Inter', sans-serif; font-size: 1.1rem; line-height: 1.8; color: #444; }
+    .blog-body p { margin-bottom: 1.5rem; }
+    .blog-body a { color: #2D6A4F; font-weight: 500; text-decoration: underline; }
+    .back-link { display: inline-block; margin-top: 3rem; color: #2D6A4F; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <!-- Navigation (Reused) -->
+  <div class="nav-wrap">
+    <nav class="nav-island">
+      <a href="/" class="nav-logo">O.</a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#gallery">Active Life</a>
+        <a href="/#notebook" style="color:var(--forest); background:rgba(45,106,79,0.06);">Notebook</a>
+        <a href="/#contact" class="nav-link--cta">Contact</a>
+      </div>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="/">Home</a>
+    <a href="/#experience">Experience</a>
+    <a href="/#projects">Projects</a>
+    <a href="/#gallery">Active Life</a>
+    <a href="/#notebook">Notebook</a>
+    <a href="/#contact">Contact</a>
+  </div>
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+  <!-- Blog Content -->
+  <main class="blog-container">
+    <div id="blog-content">
+      <!-- Injected by JS -->
+      <div style="text-align:center; color:#999; margin-top:4rem;">Loading...</div>
+    </div>
+    <a href="/#notebook" class="back-link">&larr; Back to Notebook</a>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="#">LinkedIn</a>
+      <a href="#">GitHub</a>
+      <a href="mailto:contact@omer.com">Email</a>
+    </div>
+    <p>&copy; 2026 Omer Faruk Unal. Crafted with precision.</p>
+  </footer>
+
+  <script type="module">
+    import './src/styles/index.css';
+    import { initNav } from './src/components/nav.js';
+    import { posts } from './src/data/posts.js';
+
+    // Init Nav
+    initNav();
+
+    // Load Post
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const container = document.getElementById('blog-content');
+
+    const post = posts.find(p => p.id === id);
+
+    if (post) {
+      document.title = `${post.title} · Omer Faruk Unal`;
+      container.innerHTML = `
+        <article>
+          <div class="blog-header">
+            <div class="blog-meta">${post.emoji} · ${post.date} · ${post.readTime} read</div>
+            <h1 class="blog-title">${post.title}</h1>
+          </div>
+          <div class="blog-body">${post.body}</div>
+        </article>
+      `;
+    } else {
+      container.innerHTML = `<h2 style="text-align:center">Post not found.</h2>`;
+    }
+  </script>
+</body>
+</html>
